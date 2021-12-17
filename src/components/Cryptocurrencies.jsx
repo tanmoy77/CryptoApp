@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import millify from "millify";
 import { Row, Col, Card, Input } from "antd";
 import { Link } from "react-router-dom";
-
+import Loader from "./Loader";
 import { useGetCryptosQuery } from "../services/CryptoApi";
 
 const Cryptocurrencies = ({ simplified }) => {
@@ -17,15 +17,16 @@ const Cryptocurrencies = ({ simplified }) => {
     );
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
-  if (isFetching) return "Loading...";
+  if (isFetching) return <Loader/>;
   return (
     <>
-      <div className="search-crypto">
+    {!simplified && (<div className="search-crypto">
         <Input
           placeholder="search cryptocoin"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
+      </div>)}
+      
 
       <Row gutter={[32, 32]} className="crypto-card-container">
         {cryptos?.map((currency) => (
